@@ -24,4 +24,7 @@ func parent() {
 			os.Args[1:]...,
 		)...,
 	)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 }
