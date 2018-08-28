@@ -73,3 +73,14 @@ func chroot(path string) (func() error, error) {
 		return syscall.Chroot(".")
 	}, nil
 }
+
+func must(err error) {
+	if err != nil {
+		switch err.(type) {
+		case *exec.ExitError:
+			return
+		default:
+			panic(err)
+		}
+	}
+}
