@@ -37,6 +37,8 @@ func parent() {
 func child() {
 	fmt.Printf("running: %v\n", os.Args[2:])
 	
+	exit, err := chroot("/home/kenvilar/Documents/docker_projects/create-real-container-without-using-docker/rootfs")
+	
 	cmd := exec.Command(os.Args[2], os.Args[3:]...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
