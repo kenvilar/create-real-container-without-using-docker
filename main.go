@@ -30,3 +30,7 @@ func parent() {
 	
 	must(cmd.Run())
 }
+
+func child() {
+	fmt.Printf("running: %v\n", os.Args[1:])
+}
