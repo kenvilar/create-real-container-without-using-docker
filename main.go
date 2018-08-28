@@ -43,6 +43,7 @@ func child() {
 	must(os.Chdir("/"))
 	
 	must(syscall.Mount("proc", "proc", "proc", 0, ""))
+	defer syscall.Unmount("proc", 0)
 	
 	cmd := exec.Command(os.Args[2], os.Args[3:]...)
 	cmd.Env = append(cmd.Env, "PATH=/bin:/usr/bin")
