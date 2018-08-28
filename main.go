@@ -21,14 +21,14 @@ func parent() {
 		"/proc/self/exe",
 		append(
 			[]string{"child"},
-			os.Args[1:]...,
-		)...,
+			os.Args[1:]...
+		)...
 	)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	cmd.SysProcAttr = &syscall.SysProcAttr {
-		Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS
+		Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS,
 	}
 	
 	must(cmd.Run())
@@ -52,4 +52,24 @@ func child() {
 	cmd.Stderr = os.Stderr
 	
 	must(cmd.Run())
+}
+
+func chroot(path string) (func() error, error) {
+	root, err := os.Open("/")
+	if err != nil {
+		return nil, err
+	}
+
+	if err := syscall.Chroot(path); err != nil {
+		root.Close()
+		return nil, err
+	}
+
+	return func() error {
+		defer root.Close()
+		if err := root.Chdir(); err != nil {
+			return err
+		}
+		return syscall.Chroot(".")
+	}, nil
 }
