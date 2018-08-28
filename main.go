@@ -43,6 +43,7 @@ func child() {
 	must(os.Chdir("/"))
 	
 	cmd := exec.Command(os.Args[2], os.Args[3:]...)
+	cmd.Env = append(cmd.Env, "PATH=/bin:/usr/bin")
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
