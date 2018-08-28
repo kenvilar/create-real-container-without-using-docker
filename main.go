@@ -15,3 +15,9 @@ func main() {
 			parent()
 	}
 }
+
+func parent() {
+	cmd := exec.Command(
+		"/proc/self/exe",
+	)
+}
