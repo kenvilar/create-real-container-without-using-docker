@@ -28,7 +28,7 @@ func parent() {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	cmd.SysProcAttr = &syscall.SysProcAttr {
-		//TODO: Set the Cloneflags
+		Cloneflags: syscall.CLONE_NEWUTS
 	}
 	
 	must(cmd.Run())
