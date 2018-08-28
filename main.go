@@ -19,5 +19,9 @@ func main() {
 func parent() {
 	cmd := exec.Command(
 		"/proc/self/exe",
+		append(
+			[]string{"child"},
+			os.Args[1:]...,
+		)...,
 	)
 }
