@@ -42,6 +42,8 @@ func child() {
 	must(err) //warn if there's an error
 	must(os.Chdir("/"))
 	
+	must(syscall.Mount("proc", "proc", "proc", 0, ""))
+	
 	cmd := exec.Command(os.Args[2], os.Args[3:]...)
 	cmd.Env = append(cmd.Env, "PATH=/bin:/usr/bin")
 	cmd.Stdin = os.Stdin
